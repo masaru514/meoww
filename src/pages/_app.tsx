@@ -9,8 +9,12 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 const CustomApp: FC<AppProps> = ({ Component, pageProps }) => (
   <>
+    <header>
+      <h1>Hello world</h1>
+    </header>
     <CssBaseline />
     <Component {...pageProps} />
+    <footer>フッターです</footer>
   </>
 )
 
