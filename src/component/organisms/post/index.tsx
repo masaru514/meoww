@@ -1,13 +1,31 @@
-import { Box, Button, TextField } from '@material-ui/core'
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  makeStyles,
+  TextField,
+} from '@material-ui/core'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 
+const useStyles = makeStyles({
+  listItem: {
+    border: '1px solid #ccc',
+    borderRadius: '1rem',
+    padding: '2rem',
+    marginBottom: '2rem',
+  },
+})
+
 const Post: React.FC = () => {
+  const classes = useStyles()
   const [postValue, setPostValue] = useState({ text: '' })
   const [posted, setPosted] = useState<string[]>([])
+  const isEmpty = postValue.text === ''
   const handleSubmit = () => (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // 投稿されたリストの管理
-    setPosted([...posted, postValue.text])
+    setPosted([postValue.text, ...posted])
 
     // リセット処理
     setPostValue({
@@ -25,28 +43,33 @@ const Post: React.FC = () => {
     })
   }
   return (
-    <Box display="grid" onSubmit={handleSubmit()}>
+    <Box display="grid" maxWidth={1000} margin="0 auto">
       <Box>
-        投稿する
-        <form>
+        <form onSubmit={handleSubmit()}>
           <TextField
             id="filled-multiline-flexible"
-            label="Multiline"
+            label="投稿する"
             multiline
             maxRows={4}
             value={postValue.text}
             onChange={handleChange()}
             variant="filled"
           />
-          <Button type="submit">送信</Button>
+          <Button type="submit" variant="outlined" disabled={isEmpty}>
+            送信
+          </Button>
         </form>
       </Box>
       <Box>
-        <ul>
+        <List>
           {posted.map((item) => {
-            return <li>{item}</li>
+            return (
+              <ListItem key={item} className={classes.listItem}>
+                {item}
+              </ListItem>
+            )
           })}
-        </ul>
+        </List>
       </Box>
     </Box>
   )

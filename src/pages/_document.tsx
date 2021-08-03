@@ -6,21 +6,17 @@ import Document, {
   DocumentContext,
   DocumentInitialProps,
 } from 'next/document'
-import sprite from 'svg-sprite-loader/runtime/sprite.build'
+import { ServerStyleSheets } from '@material-ui/core/styles'
+import React from 'react'
+// import Document, { Html, Head, Main, NextScript } from 'next/document'
 
-interface CustomDocumentProps {
-  spriteContent: string
-}
-
-export default class CustomDocument extends Document<CustomDocumentProps> {
+export default class CustomDocument extends Document {
   public static async getInitialProps(
     ctx: DocumentContext
-  ): Promise<CustomDocumentProps & DocumentInitialProps> {
+  ): Promise<DocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx)
-    const spriteContent = sprite.stringify()
 
     return {
-      spriteContent,
       ...initialProps,
     }
   }
@@ -30,11 +26,31 @@ export default class CustomDocument extends Document<CustomDocumentProps> {
       <Html>
         <Head>{/* your head if needed */}</Head>
         <body>
-          <div dangerouslySetInnerHTML={{ __html: this.props.spriteContent }} />
           <Main />
           <NextScript />
         </body>
       </Html>
     )
+  }
+}
+
+CustomDocument.getInitialProps = async (ctx) => {
+  const sheets = new ServerStyleSheets()
+  const originalRenderPage = ctx.renderPage
+
+  ctx.renderPage = () =>
+    originalRenderPage({
+      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
+    })
+
+  const initialProps = await Document.getInitialProps(ctx)
+
+  return {
+    ...initialProps,
+    // Styles fragment is rendered after the app and page rendering finish.
+    styles: [
+      ...React.Children.toArray(initialProps.styles),
+      sheets.getStyleElement(),
+    ],
   }
 }

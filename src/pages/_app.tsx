@@ -7,15 +7,25 @@ import CssBaseline from '@material-ui/core/CssBaseline'
  * NextJS wrapper for Redux
  */
 
-const CustomApp: FC<AppProps> = ({ Component, pageProps }) => (
-  <>
-    <header>
-      <h1>Hello world</h1>
-    </header>
-    <CssBaseline />
-    <Component {...pageProps} />
-    <footer>フッターです</footer>
-  </>
-)
+const CustomApp: FC<AppProps> = ({ Component, pageProps }) => {
+  React.useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side')
+    if (jssStyles) {
+      jssStyles.parentElement?.removeChild(jssStyles)
+    }
+  }, [])
+
+  return (
+    <>
+      <header>
+        <h1>Hello world</h1>
+      </header>
+      <CssBaseline />
+      <Component {...pageProps} />
+      <footer>フッターです</footer>
+    </>
+  )
+}
 
 export default CustomApp
