@@ -15,6 +15,10 @@ const useStyles = makeStyles({
     padding: '2rem',
     marginBottom: '2rem',
   },
+  textField: {
+    width: 500,
+    marginRight: '1rem',
+  },
 })
 
 const Post: React.FC = () => {
@@ -54,6 +58,7 @@ const Post: React.FC = () => {
             value={postValue.text}
             onChange={handleChange()}
             variant="filled"
+            className={classes.textField}
           />
           <Button type="submit" variant="outlined" disabled={isEmpty}>
             送信
