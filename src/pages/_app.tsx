@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { AppProps } from 'next/app'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { Box, Button } from '@material-ui/core'
 
 /**
  * withRedux HOC
@@ -15,12 +16,12 @@ const CustomApp: FC<AppProps> = ({ Component, pageProps }) => {
       jssStyles.parentElement?.removeChild(jssStyles)
     }
   }, [])
-
   return (
     <>
-      <header>
-        <h1>Hello world</h1>
-      </header>
+      <Box display="flex" justifyContent="space-between">
+        <h1>[サービス名]</h1>
+        <Button>ログインする</Button>
+      </Box>
       <CssBaseline />
       <Component {...pageProps} />
       <footer>フッターです</footer>
