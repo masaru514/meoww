@@ -20,7 +20,7 @@ const CustomApp: FC<AppProps> = ({ Component, pageProps }) => {
     <>
       <Box display="flex" justifyContent="space-between">
         <h1>[サービス名]</h1>
-        <Button>ログインする</Button>
+        <Button onClick={() => console.log('aa')}>ログインする</Button>
       </Box>
       <CssBaseline />
       <Component {...pageProps} />

@@ -1,1 +1,2 @@
-export * from './firebase'
+export * from './firebase-client'
+export * from './auth'
