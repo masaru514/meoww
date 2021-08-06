@@ -2,12 +2,17 @@ import { auth, firebase } from '../firebase-client'
 
 const provider = new firebase.auth.GoogleAuthProvider()
 
-export const useSignIn = () => {
+type SignIn = {
+  handleGoogleLogin: () => void
+}
+
+export const useSignIn = (): SignIn => {
   const handleGoogleLogin = async () => {
     try {
-      await auth.signInWithPopup(provider).catch((err) => {
+      const user = await auth.signInWithPopup(provider).catch((err) => {
         throw err
       })
+      console.log(user)
     } catch (err) {
       console.error(err)
     }
