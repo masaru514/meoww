@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
 import { AppProps } from 'next/app'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { Box, Button } from '@material-ui/core'
-import { useSignIn } from 'src/fixtures'
+import Header from 'src/component/molecules/header'
+import { AuthProvider } from 'src/context/auth'
 
 /**
  * withRedux HOC
@@ -17,28 +17,13 @@ const CustomApp: FC<AppProps> = ({ Component, pageProps }) => {
       jssStyles.parentElement?.removeChild(jssStyles)
     }
   }, [])
-  const { handleGoogleLogin, currentUser } = useSignIn()
-  // useEffect(() => {
-  //   getToken()
-  //   currentUser()
-  // })
-
-  const handleClickTest = () => {
-    const photoURL = currentUser()?.photoURL
-    console.log(photoURL || 'nullです')
-  }
-
   return (
-    <>
-      <Box display="flex" justifyContent="space-between">
-        <h1>[サービス名]</h1>
-        <Button onClick={() => handleGoogleLogin()}>ログインする</Button>
-        <Button onClick={() => handleClickTest()}>Userを確認する</Button>
-      </Box>
+    <AuthProvider>
+      <Header />
       <CssBaseline />
       <Component {...pageProps} />
       <footer>フッターです</footer>
-    </>
+    </AuthProvider>
   )
 }
 
