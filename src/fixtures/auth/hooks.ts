@@ -12,7 +12,23 @@ export const useSignIn = () => {
       console.error(err)
     }
   }
+  const getToken = () => {
+    return auth
+      .getRedirectResult()
+      .then((result) => {
+        console.log(result)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
+
+  const currentUser = () => {
+    return auth.currentUser
+  }
   return {
     handleGoogleLogin,
+    getToken,
+    currentUser,
   }
 }

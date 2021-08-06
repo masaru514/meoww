@@ -17,12 +17,23 @@ const CustomApp: FC<AppProps> = ({ Component, pageProps }) => {
       jssStyles.parentElement?.removeChild(jssStyles)
     }
   }, [])
-  const { handleGoogleLogin } = useSignIn()
+  const { handleGoogleLogin, currentUser } = useSignIn()
+  // useEffect(() => {
+  //   getToken()
+  //   currentUser()
+  // })
+
+  const handleClickTest = () => {
+    const photoURL = currentUser()?.photoURL
+    console.log(photoURL || 'nullです')
+  }
+
   return (
     <>
       <Box display="flex" justifyContent="space-between">
         <h1>[サービス名]</h1>
         <Button onClick={() => handleGoogleLogin()}>ログインする</Button>
+        <Button onClick={() => handleClickTest()}>Userを確認する</Button>
       </Box>
       <CssBaseline />
       <Component {...pageProps} />
