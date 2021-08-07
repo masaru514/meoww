@@ -1,4 +1,5 @@
 import { User } from '@firebase/auth-types'
+import firebase from 'firebase/app'
 import React, { FC, ReactNode, useEffect, useState } from 'react'
 import { auth } from 'src/fixtures'
 
@@ -17,16 +18,16 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuthChecked, setIsAuthChecked] = useState(false)
 
   useEffect(() => {
-    if (user) return
-    console.warn('no user...')
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.warn('set user...')
-        setUser(user)
-      } else {
-        setUser(null)
-      }
-      setIsAuthChecked(true)
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+      return auth.onAuthStateChanged((user) => {
+        if (user) {
+          console.warn('set user')
+          setUser(user)
+        } else {
+          setUser(null)
+        }
+        setIsAuthChecked(true)
+      })
     })
   })
   return (
