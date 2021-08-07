@@ -5,19 +5,32 @@ import {
   ListItem,
   makeStyles,
   TextField,
+  Typography,
 } from '@material-ui/core'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 
 const useStyles = makeStyles({
-  listItem: {
+  listRoot: {
     border: '1px solid #ccc',
-    borderRadius: '1rem',
+    padding: 0,
+  },
+  listNothing: {
+    color: '#aaa',
+  },
+  listItem: {
+    borderBottom: '1px solid #ccc',
     padding: '2rem',
-    marginBottom: '2rem',
+    '&:last-child': {
+      borderBottom: 'none',
+    },
   },
   textField: {
     width: 500,
     marginRight: '1rem',
+  },
+  formRoot: {
+    display: 'flex',
+    alitnItems: 'center',
   },
 })
 
@@ -36,7 +49,6 @@ const Post: React.FC = () => {
       ...postValue,
       text: '',
     })
-    console.warn('get send')
   }
 
   const handleChange = () => (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,10 +61,10 @@ const Post: React.FC = () => {
   return (
     <Box display="grid" maxWidth={1000} margin="0 auto">
       <Box>
-        <form onSubmit={handleSubmit()}>
+        <form onSubmit={handleSubmit()} className={classes.formRoot}>
           <TextField
             id="filled-multiline-flexible"
-            label="投稿する"
+            label="ページタイトルを入力する"
             multiline
             maxRows={4}
             value={postValue.text}
@@ -61,20 +73,26 @@ const Post: React.FC = () => {
             className={classes.textField}
           />
           <Button type="submit" variant="outlined" disabled={isEmpty}>
-            送信
+            作成
           </Button>
         </form>
       </Box>
-      <Box>
-        <List>
-          {posted.map((item) => {
-            return (
-              <ListItem key={item} className={classes.listItem}>
-                {item}
-              </ListItem>
-            )
-          })}
-        </List>
+      <Box mt={6}>
+        {posted.length ? (
+          <List className={classes.listRoot}>
+            {posted.map((item, index) => {
+              return (
+                <ListItem key={index} className={classes.listItem}>
+                  {item}
+                </ListItem>
+              )
+            })}
+          </List>
+        ) : (
+          <Typography className={classes.listNothing}>
+            ページがありません。
+          </Typography>
+        )}
       </Box>
     </Box>
   )
