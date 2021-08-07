@@ -14,8 +14,10 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
+    if (user) return
     auth.onAuthStateChanged((user) => {
       if (user) {
+        console.warn('set user...')
         setUser(user)
       } else {
         setUser(null)
