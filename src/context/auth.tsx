@@ -4,17 +4,21 @@ import { auth } from 'src/fixtures'
 
 type AuthProps = {
   user: User | null
+  isAuthChecked: boolean
 }
 
 export const AuthContext = React.createContext<AuthProps>({
   user: null,
+  isAuthChecked: false,
 })
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
+  const [isAuthChecked, setIsAuthChecked] = useState(false)
 
   useEffect(() => {
     if (user) return
+    console.warn('no user...')
     auth.onAuthStateChanged((user) => {
       if (user) {
         console.warn('set user...')
@@ -22,9 +26,12 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       } else {
         setUser(null)
       }
+      setIsAuthChecked(true)
     })
   })
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, isAuthChecked }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
