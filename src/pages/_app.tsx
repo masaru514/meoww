@@ -3,6 +3,7 @@ import { AppProps } from 'next/app'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Header from 'src/component/molecules/header'
 import { AuthProvider } from 'src/context/auth'
+import Footer from 'src/component/molecules/footer'
 
 /**
  * withRedux HOC
@@ -19,10 +20,10 @@ const CustomApp: FC<AppProps> = ({ Component, pageProps }) => {
   }, [])
   return (
     <AuthProvider>
-      <Header />
       <CssBaseline />
+      <Header />
       <Component {...pageProps} />
-      <footer>フッターです</footer>
+      <Footer />
     </AuthProvider>
   )
 }
