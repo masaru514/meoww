@@ -4,6 +4,7 @@ const provider = new firebase.auth.GoogleAuthProvider()
 
 type SignIn = {
   handleGoogleLogin: () => void
+  handleGoogleLogout: () => void
 }
 
 export const useSignIn = (): SignIn => {
@@ -17,7 +18,18 @@ export const useSignIn = (): SignIn => {
       console.error(err)
     }
   }
+
+  const handleGoogleLogout = async () => {
+    try {
+      await auth.signOut().catch((err) => {
+        throw err
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
   return {
     handleGoogleLogin,
+    handleGoogleLogout,
   }
 }

@@ -7,7 +7,8 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
+import { AuthContext } from 'src/context/auth'
 
 const useStyles = makeStyles({
   listRoot: {
@@ -38,6 +39,7 @@ const Post: React.FC = () => {
   const classes = useStyles()
   const [postValue, setPostValue] = useState({ text: '' })
   const [posted, setPosted] = useState<string[]>([])
+  const { user } = useContext(AuthContext)
   const isEmpty = postValue.text === ''
   const handleSubmit = () => (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -57,6 +59,9 @@ const Post: React.FC = () => {
       ...postValue,
       text: e.target.value,
     })
+  }
+  if (!user) {
+    return <div>ログインをしてください。</div>
   }
   return (
     <Box display="grid" maxWidth={1000} margin="0 auto">

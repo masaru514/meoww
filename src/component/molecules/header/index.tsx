@@ -20,11 +20,10 @@ const useStyles = makeStyles({
 const Header: FC = () => {
   const router = useRouter()
   const classes = useStyles()
-
   return (
     <Box component="header" className={classes.header}>
       <Box className={classes.headerWrapper}>
-        <h1>[サービス名]</h1>
+        <h1>meow</h1>
         <Box display="flex" alignItems="center">
           <UserProfile />
           <Box ml={2}>
