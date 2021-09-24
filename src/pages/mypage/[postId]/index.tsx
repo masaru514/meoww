@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router'
 import React, { FC } from 'react'
-import MainWrapper from 'src/component/templates/MainWrapper'
+import Contents from 'src/component/molecules/Contents'
 
 const PostDetails: FC = () => {
   const router = useRouter()
   const { postId } = router.query
-  return <MainWrapper>{postId}</MainWrapper>
+  return <Contents>{postId}</Contents>
 }
 
 export default PostDetails

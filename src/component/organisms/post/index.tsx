@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
+import Contents from 'src/component/molecules/Contents'
 import { AuthContext } from 'src/context/auth'
 
 const useStyles = makeStyles({
@@ -61,10 +62,10 @@ const Post: React.FC = () => {
     })
   }
   if (!user) {
-    return <div>ログインをしてください。</div>
+    return <Contents>ログインをしてください。</Contents>
   }
   return (
-    <Box display="grid" maxWidth={1000} margin="0 auto">
+    <Contents>
       <Box>
         <form onSubmit={handleSubmit()} className={classes.formRoot}>
           <TextField
@@ -99,7 +100,7 @@ const Post: React.FC = () => {
           </Typography>
         )}
       </Box>
-    </Box>
+    </Contents>
   )
 }
 
