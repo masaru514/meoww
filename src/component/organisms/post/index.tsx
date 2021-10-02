@@ -36,16 +36,24 @@ const useStyles = makeStyles({
   },
 })
 
+type PostParam = {
+  text: string
+  date: string
+}
+
 const Post: React.FC = () => {
   const classes = useStyles()
-  const [postValue, setPostValue] = useState({ text: '' })
-  const [posted, setPosted] = useState<string[]>([])
+  const [postValue, setPostValue] = useState<PostParam>({
+    text: '',
+    date: '',
+  })
+  const [posted, setPosted] = useState<PostParam[]>([])
   const { user } = useContext(AuthContext)
   const isEmpty = postValue.text === ''
   const handleSubmit = () => (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // 投稿されたリストの管理
-    setPosted([postValue.text, ...posted])
+    setPosted([postValue, ...posted])
 
     // リセット処理
     setPostValue({
@@ -54,11 +62,13 @@ const Post: React.FC = () => {
     })
   }
 
+  const currentDate = String(new Date())
+
   const handleChange = () => (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value)
     setPostValue({
       ...postValue,
       text: e.target.value,
+      date: currentDate,
     })
   }
   if (!user) {
@@ -89,7 +99,8 @@ const Post: React.FC = () => {
             {posted.map((item, index) => {
               return (
                 <ListItem key={index} className={classes.listItem}>
-                  {item}
+                  <span>{item.date}</span>
+                  {item.text}
                 </ListItem>
               )
             })}
