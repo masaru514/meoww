@@ -12,7 +12,7 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Contents>
-        <main>現在開発中です。</main>
+        <main>Github Issueみたいなの作ってます。</main>
       </Contents>
     </>
   )
